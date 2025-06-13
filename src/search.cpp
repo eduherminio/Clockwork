@@ -259,9 +259,15 @@ Value Worker::search(Position& pos, Stack* ss, Value alpha, Value beta, Depth de
     if (best_value >= beta && quiet_move(best_move)) {
         ss->killer = best_move;
 
-        m_td.history.update_quiet_stats(pos, best_move, depth * depth);
+        auto history_depth = depth;
+
+        if (best_value >= beta + 115) {
+            ++history_depth;
+        }
+
+        m_td.history.update_quiet_stats(pos, best_move, history_depth * history_depth);
         for (Move quiet : quiets_played) {
-            m_td.history.update_quiet_stats(pos, quiet, -depth * depth);
+            m_td.history.update_quiet_stats(pos, quiet, -history_depth * history_depth);
         }
     }
 

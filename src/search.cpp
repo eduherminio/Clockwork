@@ -503,6 +503,11 @@ Value Worker::search(
                 reduction = std::min(reduction, 1024);
             }
 
+            // Move gives check
+            if (is_in_check) {
+                reduction -= 1024;
+            }
+
             reduction /= 1024;
 
             Depth reduced_depth = std::clamp<Depth>(new_depth - reduction, 1, new_depth);

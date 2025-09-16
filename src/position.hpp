@@ -179,6 +179,10 @@ public:
         return attack_table(color).read(sq).is_set(id);
     }
 
+    [[nodiscard]] Bitboard attacked_by(Color color) const {
+        return attack_table(color).get_attacked_bitboard();
+    }
+
     [[nodiscard]] Bitboard attacked_by(Color color, PieceType ptype) const {
         return attack_table(color).get_piece_mask_bitboard(piece_list(color).mask_eq(ptype));
     }

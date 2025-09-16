@@ -162,7 +162,6 @@ int main(int argc, char* argv[]) {
         print_table("BISHOP_MOBILITY", BISHOP_MOBILITY);
         print_table("ROOK_MOBILITY", ROOK_MOBILITY);
         print_table("QUEEN_MOBILITY", QUEEN_MOBILITY);
-        print_table("KING_MOBILITY", KING_MOBILITY);
         std::cout << std::endl;
 
         print_table("KNIGHT_KING_RING", KNIGHT_KING_RING);

@@ -70,7 +70,6 @@ PScore evaluate_pieces(const Position& pos) {
         eval += QUEEN_MOBILITY[pos.mobility_of(color, id, ~bb)];
         eval += QUEEN_KING_RING[pos.mobility_of(color, id, opp_king_ring)];
     }
-    eval += KING_MOBILITY[pos.mobility_of(color, PieceId::king(), ~bb)];
 
     if (pos.piece_count(color, PieceType::Bishop) >= 2) {
         eval += BISHOP_PAIR_VAL;

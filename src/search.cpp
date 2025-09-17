@@ -481,8 +481,18 @@ Value Worker::search(
         Depth new_depth = depth - 1 + pos_after.is_in_check();
         Value value;
         if (depth >= 3 && moves_played >= 2 + 2 * PV_NODE) {
-            i32 reduction = static_cast<i32>(
-              std::round(1024 * (0.77 + std::log(depth) * std::log(moves_played) / 2.36)));
+            i32 reduction;
+
+            if (quiet) {
+                reduction = static_cast<i32>(
+                  std::round(1024 * (0.77 + std::log(depth) * std::log(moves_played) / 2.36)));
+
+                reduction += (1024 - move_history / 8);
+            } else {
+                reduction = static_cast<i32>(
+                  std::round(1024 * (0.77 + std::log(depth) * std::log(moves_played) / 1.18)));
+            }
+
             reduction -= 1024 * PV_NODE;
 
             reduction += alpha_raises * 512;
@@ -497,10 +507,6 @@ Value Worker::search(
 
             if ((ss + 1)->fail_high_count > 3) {
                 reduction += 1024;
-            }
-
-            if (quiet) {
-                reduction += (1024 - move_history / 8);
             }
 
             if (!quiet) {

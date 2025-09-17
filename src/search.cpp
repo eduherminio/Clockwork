@@ -485,12 +485,12 @@ Value Worker::search(
 
             if (quiet) {
                 reduction = static_cast<i32>(
-                  std::round(1024 * (0.77 + std::log(depth) * std::log(moves_played) / 4.72)));
+                  std::round(1024 * (0.20 + std::log(depth) * std::log(moves_played) / 4.72)));
 
                 reduction += (1024 - move_history / 8);
             } else {
                 reduction = static_cast<i32>(
-                  std::round(1024 * (0.77 + std::log(depth) * std::log(moves_played) / 2.36)));
+                  std::round(1024 * (0.20 + std::log(depth) * std::log(moves_played) / 2.36)));
             }
 
             reduction -= 1024 * PV_NODE;

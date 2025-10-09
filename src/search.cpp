@@ -815,13 +815,13 @@ Value Worker::quiesce(const Position& pos, Stack* ss, Value alpha, Value beta, i
         if (value > best_value) {
             best_value = value;
 
+            if (value >= beta) {
+                break;
+            }
+
             if (value > alpha) {
                 alpha     = value;
                 best_move = m;
-
-                if (value >= beta) {
-                    break;
-                }
             }
         }
     }

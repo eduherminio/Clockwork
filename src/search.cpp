@@ -538,7 +538,7 @@ Value Worker::search(
             }
 
             // Multicut
-            else if (singular_beta >= beta) {
+            else if (singular_beta >= beta && abs(singular_beta) < VALUE_WIN) {
                 return singular_beta;
             }
 

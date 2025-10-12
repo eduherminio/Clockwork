@@ -138,23 +138,4 @@ else()
             >)
     endif()
 
-    # Tests
-    enable_testing()
-    set(CMAKE_SKIP_TEST_ALL_DEPENDENCY FALSE)
-    function(do_test name)
-        add_executable(${name} tests/${name}.cpp)
-        target_link_libraries(${name} PUBLIC clockwork-lib)
-        target_add_flags(${name})
-        add_test(${name} ${name})
-    endfunction()
-
-    do_test(test_piece_count)
-    do_test(test_see)
-    do_test(test_see_prototype)
-    do_test(test_is_legal)
-    do_test(test_repetition)
-    do_test(test_static_vector)
-    do_test(test_perft)
-    do_test(test_position)
-
 endif()

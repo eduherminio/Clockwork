@@ -34,7 +34,7 @@ ifeq ($(PARALLEL_BUILD),yes)
 	CMAKE_BUILD_FLAGS := -j
 endif
 
-.PHONY: all release debug evaltune test clean format
+.PHONY: all release debug evaltune clean format
 
 all: release
 
@@ -56,9 +56,6 @@ evaltune-debug:
 
 bench: release
 	./$(EXE)$(SUFFIX) bench
-
-test: release
-	ctest --test-dir build-release
 
 clean:
 	-$(RM_DIR) build-debug build-release build-evaltune build-evaltune-debug

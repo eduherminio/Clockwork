@@ -35,6 +35,7 @@ int main() {
       "data/dfrcv0/v0.txt",
       "data/v2.2/filtered_data.txt",
       "data/v2.1/filtered_data.txt",
+      "data/v3/v3.txt",
     };
 
     // Number of threads to use, default to half available
@@ -282,6 +283,9 @@ int main() {
         std::cout << std::endl;
 
         print_table("BISHOP_PAWNS", BISHOP_PAWNS);
+        std::cout << std::endl;
+
+        print_table("BISHOP_PAWNS_CENTRAL_BLOCKED", BISHOP_PAWNS_CENTRAL_BLOCKED);
         std::cout << std::endl;
 
         auto printPsqtArray = [](const std::string& name, const auto& arr) {

@@ -116,11 +116,17 @@ PScore evaluate_pieces(const Position& pos) {
         eval += BISHOP_MOBILITY[pos.mobility_of(color, id, ~bb)];
         eval += BISHOP_KING_RING[pos.mobility_of(color, id, opp_king_ring)];
         Square sq = pos.piece_list_sq(color)[id];
+
+        const auto blocked_central_ownpawns =
+          (blocked_pawns & Bitboard::central_files()).popcount();
+
         eval += BISHOP_PAWNS[std::min(
                   static_cast<usize>(8),
                   (own_pawns & Bitboard::squares_of_color(sq.color()))
                     .popcount())  // Weird non standard positions which can have more than 8 pawns
-        ] * (1 + (blocked_pawns & Bitboard::central_files()).popcount());
+        ] * (1 + blocked_central_ownpawns);
+
+        eval += BISHOP_PAWNS_CENTRAL_BLOCKED[blocked_central_ownpawns];
     }
     for (PieceId id : pos.get_piece_mask(color, PieceType::Rook)) {
         eval += ROOK_MOBILITY[pos.mobility_of(color, id, ~bb)];

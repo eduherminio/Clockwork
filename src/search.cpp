@@ -272,7 +272,7 @@ Move Worker::iterative_deepening(const Position& root_position) {
                 break;
             }
 
-            delta += delta;
+            delta = static_cast<int>(1.4 * delta);
         }
         // If m_stopped is true, then the search exited early. Discard the results for this depth.
         if (m_stopped) {

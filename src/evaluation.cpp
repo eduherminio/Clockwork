@@ -138,18 +138,27 @@ PScore evaluate_pawns(const Position& pos) {
 
 template<Color color>
 PScore evaluate_pawn_push_threats(const Position& pos) {
-    constexpr Color opp  = ~color;
-    PScore          eval = PSCORE_ZERO;
+    constexpr Color    opp = ~color;
+    constexpr Bitboard third_rank =
+      color == Color::White ? Bitboard::rank_mask(6) : Bitboard::rank_mask(2);
 
-    Bitboard our_pawns  = pos.bitboard_for(color, PieceType::Pawn);
-    Bitboard all_pieces = pos.board().get_occupied_bitboard();
+    PScore eval = PSCORE_ZERO;
 
-    Bitboard pushable = our_pawns & ~all_pieces.shift_relative(color, Direction::South);
+    Bitboard our_pawns             = pos.bitboard_for(color, PieceType::Pawn);
+    Bitboard all_pieces            = pos.board().get_occupied_bitboard();
+    Bitboard not_behind_all_pieces = ~all_pieces.shift_relative(color, Direction::South);
 
-    Bitboard push_attacks =
-      pushable.shift_relative(color, Direction::North).shift_relative(color, Direction::NorthEast)
-      | pushable.shift_relative(color, Direction::North)
-          .shift_relative(color, Direction::NorthWest);
+    Bitboard pushable     = our_pawns & not_behind_all_pieces;
+    Bitboard pushes       = pushable.shift_relative(color, Direction::North);
+    Bitboard push_attacks = pushes.shift_relative(color, Direction::NorthEast)
+                          | pushes.shift_relative(color, Direction::NorthWest);
+
+
+    Bitboard double_pushable = pushes & third_rank & not_behind_all_pieces;
+    Bitboard double_pushes   = double_pushable.shift_relative(color, Direction::North);
+
+    push_attacks |= double_pushes.shift_relative(color, Direction::NorthEast)
+                  | double_pushes.shift_relative(color, Direction::NorthWest);
 
     eval += PAWN_PUSH_THREAT_KNIGHT
           * (push_attacks & pos.bitboard_for(opp, PieceType::Knight)).ipopcount();

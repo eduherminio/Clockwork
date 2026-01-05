@@ -154,4 +154,16 @@ void History::clear() {
     std::memset(&m_minor_corr_hist, 0, sizeof(CorrectionHistory));
 }
 
+// Ages quiet history
+void History::age_quiet() {
+    for (usize c = 0; c < 2; ++c) {
+        for (usize from_to = 0; from_to < 64 * 64; ++from_to) {
+            for (usize attack_state = 0; attack_state < 4; ++attack_state) {
+                m_main_hist[c][from_to][attack_state] =
+                  (m_main_hist[c][from_to][attack_state] * 3) / 4;
+            }
+        }
+    }
+}
+
 }  // namespace Clockwork

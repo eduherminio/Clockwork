@@ -243,6 +243,8 @@ Move Worker::iterative_deepening(const Position& root_position) {
     Move  last_best_move    = Move::none();
     PV    last_pv{};
 
+    m_td.history.age_quiet();
+
     const auto print_info_line = [&] {
         // Lambda to convert internal units score to uci score. TODO: add eval rescaling here once we get one
         auto format_score = [](Value score) {

@@ -39,8 +39,7 @@ int main() {
     std::vector<f64>      results;
 
     const std::vector<std::string> fenFiles = {
-      "data/v5_25knpm.txt",  "data/v4_8knpm.txt",    "data/v4_16knpm.txt",
-      "data/v4.1_8knpm.txt", "data/v4.1_16knpm.txt", "data/dfrcv2.txt",
+      "/mnt/d/Clockwork-data/v5_25knpm_shuffled.txt",
     };
 
     const u32 thread_count = std::max<u32>(1, std::thread::hardware_concurrency());
@@ -88,9 +87,18 @@ int main() {
             std::cerr << "Error opening " << filename << "\n";
             return 1;
         }
+
+        i32 limit = 6000000;
         std::string line;
         while (std::getline(fenFile, line)) {
             raw_lines.push_back({std::move(line), filename});
+
+            if (raw_lines.size() >= limit) {
+                break;
+            }
+        }
+        if (raw_lines.size() >= limit) {
+            break;
         }
     }
 

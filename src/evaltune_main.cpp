@@ -39,7 +39,7 @@ int main() {
     std::vector<f64>      results;
 
     const std::vector<std::string> fenFiles = {
-      "/mnt/d/Clockwork-data/v5_25knpm_after_phase_filter.vf_shuffled-cw.epd",
+      "/mnt/d/Clockwork-data/v5_25knpm.vf_shuffled.epd",
     };
 
     const u32 thread_count = std::max<u32>(1, std::thread::hardware_concurrency());

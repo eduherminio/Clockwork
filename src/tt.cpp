@@ -147,7 +147,7 @@ void TT::store(const Position& pos,
       depth + insert_flag_bonus + (age_differential * age_differential) / 4;  //+ i32::from(pv);
     i32 record_prority = tte.depth + record_flag_bonus;
 
-    if (!fragment_match || (bound == Bound::Exact && tte.bound() != Bound::Exact)
+    if (!fragment_match || bound == Bound::Exact
         || insert_priority * 3 >= record_prority * 2) {
         tte.move  = move;
         tte.score = score_to_tt(score, ply);
